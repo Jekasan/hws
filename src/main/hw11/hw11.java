@@ -10,11 +10,12 @@ public class hw11 {
         for (int i = 0; i < numbers.length; i++) {
             numbers[i] = i;
         }
-        Tree<Object> tree = new Tree<>();
 
+        Tree<Integer> tree = new Tree<Integer>();
+        System.out.println(Arrays.toString(numbers));
         tree.loadList(numbers);
-        tree.print(tree, "4");
+        tree.print(tree, "");
         System.out.println();
-        System.out.println(tree.find(0));
+        System.out.println(tree.find(2));
     }
 }

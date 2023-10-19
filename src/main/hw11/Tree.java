@@ -1,15 +1,11 @@
 package hw11;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Tree<T> implements Search<T> {
     T node;
     private List<Tree<T>> children = new ArrayList<>();
-    private Object Tree;
 
     public Tree(T node) {
         this.node = node;
@@ -40,7 +36,7 @@ public class Tree<T> implements Search<T> {
     public void print(Tree<T> tree, String add) {
         System.out.println(add + " " + tree.node);
         for (Tree<T> children : tree.getChildren()) {
-            print(children, add);
+            print(children, '@' + add);
         }
     }
 
@@ -72,13 +68,13 @@ public class Tree<T> implements Search<T> {
         );
     }
 
-    private Tree<T> findInTree(Tree<T> tree, T findNumbers) {
+    private Tree<T> findInTree(Tree<T> myTree, T findElement) {
         Tree<T> find;
-        if (tree.node.equals(findNumbers)) {
-            return tree;
+        if (myTree.node.equals(findElement)) {
+            return myTree;
         }
-        for (Tree<T> children : tree.getChildren()) {
-            find = findInTree(children, findNumbers);
+        for (Tree<T> children : myTree.getChildren()) {
+            find = findInTree(children, findElement);
             if (find != null) {
                 return find;
             }
@@ -87,35 +83,22 @@ public class Tree<T> implements Search<T> {
     }
 
     @Override
-    public T find(T numbers) {
-        Tree<T> findNumbers;
-        findNumbers = findInTree(this, numbers);
-        if (findNumbers != null) {
-            return findNumbers.node;
+    public T find(T element) {
+        Tree<T> findElement;
+        findElement = findInTree(this, element);
+        if (findElement != null) {
+            return findElement.node;
         }
         return null;
     }
 
-    private List<Tree<T>> toList(Tree<T> Tree) {
+    private List<Tree<T>> toList(Tree<T> myTree) {
         List<Tree<T>> list = new ArrayList<>();
 
-        list.add(Tree);
-        for (Tree<T> children : Tree.getChildren()) {
+        list.add(myTree);
+        for (Tree<T> children : myTree.getChildren()) {
             list.addAll(toList(children));
         }
         return list;
-    }
-
-    @Override
-    public List getSortedList() {
-        List<Tree<T>> list = toList(this);
-
-        Set<T> set = new HashSet<>();
-
-        for (Tree<T> mTree : list) {
-            set.add(mTree.node);
-        }
-
-        return Arrays.asList(set.toArray());
     }
 }
